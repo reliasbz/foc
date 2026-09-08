@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>CSS Template</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  background-color: #82CAFF;
+}
+
+/* Style the header */
+.header {
+  background-color: #82CAFF;
+  padding: 30px;
+  text-align: center;
+  font-size: 35px;
+}
+
+/* Container for flexboxes */
+.row {
+  display: -webkit-flex;
+  display: flex;
+}
+
+/* Create three unequal columns that sits next to each other */
+.column {
+  padding: 10px;
+  min-height: 300px;
+}
+
+.column.side a {
+  display: block;
+  margin: 8px 0;
+  color: white;
+  text-decoration: none;
+}
+
+/* Left and right column */
+.column.side {
+  -webkit-flex: 0 0 14%;
+  -ms-flex: 0 0 14%;
+  flex: 0 0 14%;
+  background-color: midnightblue;
+  color: white;
+}
+
+/* Middle column */
+.column.middle {
+  -webkit-flex: 2;
+  -ms-flex: 2;
+  flex: 2;
+  background-color: blue;
+  color: white;
+}
+
+/* Style the footer */
+.footer {
+  background-color: navy;
+  color: white;
+  padding: 10px;
+  text-align: center;
+}
+
+/* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
+@media (max-width: 600px) {
+  .row {
+    -webkit-flex-direction: column;
+    flex-direction: column;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Databases</h1>
+</div>
+
+<div class="row">
+  <div class="column side">
+    <strong>Pages</strong>
+    <a href="course.html">Course</a>
+    <a href="project.html">Projects</a>
+    <a href="concepts.html">Concepts</a>
+    <a href="databases.html">Databases</a>
+    <a href="documentation.html">Documentation</a>
+    <a href="aboutme.html">About Me</a>
+  </div>
+
+  <div class="column middle">
+    <h2>Databases</h2>
+    <p>This page contains the database topics and resources for the course.</p>
+  </div>
+</div>
+
+<div class="footer">
+  <p>Made by Elias Rodriguez | Powered by @UB</p>
+</div>
+
+</body>
+</html>
+
