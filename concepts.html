@@ -61,15 +61,22 @@ body {
   background-color: blue;
 }
 
+/* Image + text under image */
 .column.middle img {
-  float: left;
-  margin-right: 20px;
-  margin-bottom: 10px;
+  display: block;
+  margin: 0 auto;
+  width: 250px;   /* adjust size as needed */
+  height: auto;
 }
 
 .column.middle h2 {
   font-size: 36px;
   color: aquamarine;
+}
+
+.column.middle p {
+  text-align: center;
+  margin-top: 10px; /* space between image and text */
 }
 
 /* Footer (normal, not binary) */
