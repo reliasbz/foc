@@ -17,24 +17,43 @@ body {
   color: white;
 }
 
-/* Header uses binary image */
+/* Header with binary background */
 .header {
   background: url("image/binary.jpg") no-repeat center center;
   background-size: cover;
   padding: 30px;
   text-align: center;
   font-size: 35px;
-  color: white; /* readable on dark image */
+  color: white;
 }
 
-/* Side column stays midnight blue */
+/* Flex container */
+.row {
+  display: flex;
+}
+
+/* Columns */
+.column {
+  padding: 10px;
+  min-height: 300px;
+}
+
+/* Side column links */
+.column.side a {
+  display: block;
+  margin: 8px 0;
+  color: white;
+  text-decoration: none;
+}
+
+/* Side column */
 .column.side {
   flex: 0 0 14%;
   background-color: midnightblue;
   color: white;
 }
 
-/* Middle column stays solid blue */
+/* Middle column */
 .column.middle {
   flex: 2;
   text-align: center;
@@ -53,10 +72,9 @@ body {
   color: aquamarine;
 }
 
-/* Footer uses binary image */
+/* Footer (normal, not binary) */
 .footer {
-  background: url("image/binary.jpg") no-repeat center center;
-  background-size: cover;
+  background-color: midnightblue;
   color: white;
   padding: 10px;
   text-align: center;
@@ -68,7 +86,6 @@ body {
     flex-direction: column;
   }
 }
-
 </style>
 </head>
 <body>
