@@ -17,47 +17,29 @@ body {
   color: white;
 }
 
-/* Top bar */
+/* Header uses binary image */
 .header {
   background: url("image/binary.jpg") no-repeat center center;
   background-size: cover;
   padding: 30px;
   text-align: center;
   font-size: 35px;
-  color: white; /* readable on image */
+  color: white; /* readable on dark image */
 }
 
-/* Flex container */
-.row {
-  display: flex;
-}
-
-/* Columns */
-.column {
-  padding: 10px;
-  min-height: 300px;
-}
-
-.column.side a {
-  display: block;
-  margin: 8px 0;
-  color: white;
-  text-decoration: none;
-}
-
-/* Side column */
+/* Side column stays midnight blue */
 .column.side {
   flex: 0 0 14%;
-  background-color: midnightblue; /* solid midnight blue */
+  background-color: midnightblue;
   color: white;
 }
 
-/* Middle column */
+/* Middle column stays solid blue */
 .column.middle {
   flex: 2;
   text-align: center;
   color: white;
-  background-color: blue; /* solid blue */
+  background-color: blue;
 }
 
 .column.middle img {
@@ -71,7 +53,7 @@ body {
   color: aquamarine;
 }
 
-/* Bottom bar */
+/* Footer uses binary image */
 .footer {
   background: url("image/binary.jpg") no-repeat center center;
   background-size: cover;
