@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Student 2 ASCII Program</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      max-width: 760px;
+      min-height: 100vh;
+      margin: 40px auto;
+      padding: 0 20px;
+      color: #222;
+      background: #000 url("bg.jpg") center center / cover fixed;
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.5;
+    }
+
+    header,
+    main {
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.94);
+      border-radius: 8px;
+    }
+
+    main {
+      margin-top: 16px;
+    }
+
+    section {
+      margin: 28px 0;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #ccc;
+    }
+
+    textarea {
+      display: block;
+      width: 100%;
+      min-height: 90px;
+      margin: 8px 0 12px;
+      padding: 10px;
+      font: inherit;
+    }
+
+    input,
+    button {
+      padding: 7px 10px;
+      font: inherit;
+    }
+
+    button {
+      color: white;
+      background: #174a78;
+      border: 0;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #103653;
+    }
+
+    button:focus-visible,
+    textarea:focus-visible,
+    input:focus-visible,
+    a:focus-visible {
+      outline: 3px solid #f0b429;
+      outline-offset: 2px;
+    }
+
+    #message {
+      min-height: 1.5em;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    th,
+    td {
+      padding: 7px 10px;
+      border: 1px solid #ccc;
+    }
+
+    th {
+      background: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Student 2: ASCII Converter</h1>
+    <p>ASCII matches numbers from 0 to 127 with characters. Choose either direction below.</p>
+  </header>
+
+  <main>
+    <section>
+      <h2>Text to ASCII</h2>
+      <p>Type text to see the decimal ASCII code for each character.</p>
+      <form id="textForm">
+        <label for="textInput">Text to convert</label>
+        <textarea id="textInput" placeholder="For example: Hello!" spellcheck="false"></textarea>
+        <button type="submit">Convert text</button>
+      </form>
+    </section>
+
+    <section>
+      <h2>ASCII number to character</h2>
+      <p>Enter one decimal ASCII number from 0 to 127, like in the class sample.</p>
+      <form id="numberForm">
+        <label for="numberInput">ASCII decimal number</label>
+        <input id="numberInput" type="number" step="1">
+        <button type="submit">Show character</button>
+      </form>
+    </section>
+
+    <p id="message" role="status" aria-live="polite"></p>
+    <table id="results" hidden>
+      <thead>
+        <tr>
+          <th scope="col">Character or ASCII name</th>
+          <th scope="col">Decimal code</th>
+        </tr>
+      </thead>
+      <tbody id="resultRows"></tbody>
+    </table>
+  </main>
+
+  <script>
+    var textForm = document.getElementById("textForm");
+    var numberForm = document.getElementById("numberForm");
+    var textInput = document.getElementById("textInput");
+    var numberInput = document.getElementById("numberInput");
+    var message = document.getElementById("message");
+    var results = document.getElementById("results");
+    var resultRows = document.getElementById("resultRows");
+
+    function characterName(code) {
+      if (code === 32) {
+        return "Space";
+      }
+      if (code === 127) {
+        return "DEL (non-printing)";
+      }
+      if (code < 32) {
+        return "Control code (non-printing)";
+      }
+      return String.fromCharCode(code);
+    }
+
+    function showCodes(codes, description) {
+      resultRows.textContent = "";
+
+      for (var code of codes) {
+        var row = document.createElement("tr");
+        var characterCell = document.createElement("td");
+        var codeCell = document.createElement("td");
+
+        characterCell.textContent = characterName(code);
+        codeCell.textContent = code;
+        row.appendChild(characterCell);
+        row.appendChild(codeCell);
+        resultRows.appendChild(row);
+      }
+
+      message.textContent = description;
+      results.hidden = false;
+    }
+
+    function clearResults() {
+      resultRows.textContent = "";
+      results.hidden = true;
+    }
+
+    textForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+      clearResults();
+
+      var text = textInput.value;
+      if (text.length === 0) {
+        message.textContent = "Please type some text first.";
+        return;
+      }
+
+      var codes = [];
+      for (var character of text) {
+        var code = character.codePointAt(0);
+        if (code > 127) {
+          message.textContent = "This character is outside standard ASCII (0–127): " + character;
+          return;
+        }
+        codes.push(code);
+      }
+
+      showCodes(codes, "Converted " + codes.length + " character(s).");
+    });
+
+    numberForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+      clearResults();
+
+      var code = numberInput.valueAsNumber;
+      if (!Number.isInteger(code) || code < 0 || code > 127) {
+        message.textContent = "Enter a whole number from 0 to 127.";
+        return;
+      }
+
+      showCodes([code], "ASCII value for " + code + ": " + characterName(code));
+    });
+  </script>
+</body>
+</html>
