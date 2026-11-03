@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<head>
+  <title>Sum of Even Numbers</title>
+</head>
+<body>
+
+<p> Enter a number and I will give you the sum of all the even numbers up to and including the number yo entered if it is even, if not just the even numbers smaller than the
+	number you entered!</p>
+
+  <input type="number" id="num1">
+
+  <button onclick="evenSum()">=</button>
+ 
+<p>The sum of even numbers is: </p>
+
+  <h2 id="result"></h2>
+
+  <script>
+    function evenSum() {
+	let n1 = +num1.value;
+	let evenSum = 0;
+	int i = 0;
+	while (i <= n1) {
+      evenSum = evenSum + num1;
+	  i = i + 2;
+	}
+	  
+      let resultElement = document.getElementById('result');
+      resultElement.textContent = evenSum;
+    }
+  </script>
+
+</body>
+</html>
