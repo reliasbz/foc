@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<head>
+  <title>Sum of Odd Numbers</title>
+</head>
+<body>
+
+<p> Enter a number and I will give you the sum of all the ODD numbers up to and including the number you entered if it is odd, if not just the odd numbers smaller than the
+	number you entered!</p>
+
+  <input type="number" id="num1">
+
+  <button onclick="oddSum()">=</button>
+ 
+<p>The sum of odd numbers is: </p>
+
+  <h2 id="result"></h2>
+
+  <script>
+    function oddSum() {
+	let n1 = +num1.value;
+	let oddSum = 0;
+	let i = 1;
+	while (i <= n1) {
+      oddSum = oddSum + i;
+	  i = i + 2;
+	}
+	  
+      let resultElement = document.getElementById('result');
+      resultElement.textContent = oddSum;
+    }
+  </script>
+
+</body>
+</html>
