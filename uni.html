@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FoC - UNICODE</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: #f4f6f9;
+      color: #222222;
+      padding: 30px 15px;
+    }
+
+    .container {
+      max-width: 650px;
+      margin: 0 auto;
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      text-align: center;
+    }
+
+    .course-tag {
+      display: inline-block;
+      background-color: #e8eef7;
+      color: #1d4ed8;
+      font-weight: bold;
+      font-size: 14px;
+      padding: 5px 12px;
+      border-radius: 20px;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: 26px;
+      margin-bottom: 20px;
+      color: #111827;
+    }
+
+    .input-group {
+      margin: 20px 0;
+    }
+
+    label {
+      display: block;
+      font-size: 16px;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    input[type="text"] {
+      width: 220px;
+      padding: 10px 14px;
+      font-size: 18px;
+      text-align: center;
+      text-transform: uppercase;
+      border: 2px solid #cbd5e1;
+      border-radius: 6px;
+      letter-spacing: 2px;
+    }
+
+    input[type="text"]:focus {
+      outline: none;
+      border-color: #2563eb;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      font-weight: bold;
+      color: #ffffff;
+      background-color: #2563eb;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-left: 8px;
+    }
+
+    button:hover {
+      background-color: #1d4ed8;
+    }
+
+    .error-text {
+      color: #dc2626;
+      font-size: 15px;
+      margin-top: 10px;
+      min-height: 20px;
+    }
+
+    .display-box {
+      margin: 20px auto;
+      width: 180px;
+      padding: 20px;
+      background-color: #f8fafc;
+      border: 2px solid #e2e8f0;
+      border-radius: 10px;
+    }
+
+    .char-output {
+      font-size: 64px;
+      line-height: 1.2;
+      min-height: 78px;
+    }
+
+    .code-label {
+      margin-top: 8px;
+      font-size: 14px;
+      color: #64748b;
+      font-weight: bold;
+    }
+
+    .samples-section {
+      margin-top: 30px;
+    }
+
+    .samples-section h2 {
+      font-size: 16px;
+      color: #4b5563;
+      margin-bottom: 6px;
+    }
+
+    .samples-section p {
+      font-size: 13px;
+      color: #6b7280;
+      margin-bottom: 14px;
+    }
+
+    .sample-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(95px, 1fr));
+      gap: 10px;
+    }
+
+    .sample-card {
+      background-color: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 10px 6px;
+      cursor: pointer;
+      transition: background-color 0.15s;
+    }
+
+    .sample-card:hover {
+      background-color: #eff6ff;
+      border-color: #2563eb;
+    }
+
+    .sample-symbol {
+      font-size: 26px;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .sample-hex {
+      font-size: 12px;
+      font-weight: bold;
+      color: #334155;
+    }
+
+    .footer {
+      margin-top: 30px;
+      padding-top: 15px;
+      border-top: 1px solid #e5e7eb;
+      font-size: 14px;
+      color: #6b7280;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-bottom: 10px;
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="course-tag">FoC</div>
+    <h1>Project 1: UNICODE</h1>
+
+    <div class="input-group">
+      <label for="unicodeInput">Please input UNICODE number:</label>
+      <input type="text" id="unicodeInput" maxlength="6" placeholder="e.g. 0041 or 1F986">
+      <button onclick="showUnicode()">Submit</button>
+      <p class="error-text" id="errorMsg"></p>
+    </div>
+
+    <div class="display-box">
+      <div class="char-output" id="charOutput">A</div>
+      <div class="code-label" id="codeLabel">U+0041</div>
+    </div>
+
+    <div class="samples-section">
+      <h2>Sample Codes from Reference Charts</h2>
+      <p>Click any card below to test it automatically</p>
+      <!-- Optional: Add your downloaded Unicode chart images below if desired -->
+      <div class="sample-grid" id="sampleGrid"></div>
+    </div>
+
+    <div class="footer">
+      <!-- Change "#" to "index.html" when you link this to your main GitHub homepage -->
+      <a href="#" class="back-link">Back to Home</a>
+      <p>@ Powered by UB</p>
+    </div>
+  </div>
+
+  <script>
+    const samples = [
+      "0041", "0040", "00A9", "00D1",
+      "1F986", "1F996", "1F989", "1F947",
+      "BB7C", "BC79", "BD79", "BE7C"
+    ];
+
+    const sampleGrid = document.getElementById("sampleGrid");
+    samples.forEach(code => {
+      const char = String.fromCodePoint(parseInt(code, 16));
+      const card = document.createElement("div");
+      card.className = "sample-card";
+      card.innerHTML = `<span class="sample-symbol">${char}</span><span class="sample-hex">${code}</span>`;
+      card.onclick = function () {
+        document.getElementById("unicodeInput").value = code;
+        showUnicode();
+      };
+      sampleGrid.appendChild(card);
+    });
+
+    function showUnicode() {
+      const raw = document.getElementById("unicodeInput").value.trim().toUpperCase();
+      const errorMsg = document.getElementById("errorMsg");
+      const charOutput = document.getElementById("charOutput");
+      const codeLabel = document.getElementById("codeLabel");
+
+      if (!/^[0-9A-F]{1,6}$/.test(raw)) {
+        errorMsg.textContent = "Please enter a valid hexadecimal Unicode number (0-9, A-F).";
+        return;
+      }
+
+      const codePoint = parseInt(raw, 16);
+      if (codePoint > 0x10FFFF) {
+        errorMsg.textContent = "Unicode value out of range (max 10FFFF).";
+        return;
+      }
+
+      errorMsg.textContent = "";
+      charOutput.textContent = String.fromCodePoint(codePoint);
+      codeLabel.textContent = "U+" + raw.padStart(4, "0");
+    }
+
+    document.getElementById("unicodeInput").addEventListener("keypress", function (e) {
+      if (e.key === "Enter") {
+        showUnicode();
+      }
+    });
+  </script>
+
+</body>
+</html>
