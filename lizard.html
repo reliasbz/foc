@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Lizard Skeleton Cursor Follower</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background-color: #111;
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="canvas"></canvas>
+
+  <script>
+    // 1. Setup the full-screen canvas
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    // 2. Track the mouse position
+    let mouse = { x: canvas.width / 2, y: canvas.height / 2 };
+    window.addEventListener("mousemove", function(event) {
+      mouse.x = event.clientX;
+      mouse.y = event.clientY;
+    });
+
+    // 3. Create the spine segments (head + body + tail)
+    let segments = [];
+    let totalSegments = 70;
+    let segmentLength = 12;
+
+    for (let i = 0; i < totalSegments; i++) {
+      segments.push({ x: mouse.x, y: mouse.y, angle: 0 });
+    }
+
+    // 4. The animation loop (runs ~60 times per second)
+    function animate() {
+      // Clear the screen with a dark background
+      ctx.fillStyle = "#111";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Move the head (segment 0) smoothly toward the mouse
+      let head = segments[0];
+      head.x += (mouse.x - head.x) * 0.5;
+      head.y += (mouse.y - head.y) * 0.5;
+      head.angle = Math.atan2(mouse.y - head.y, mouse.x - head.x);
+
+      // Make each segment follow the segment in front of it
+      for (let i = 1; i < segments.length; i++) {
+        let prev = segments[i - 1];
+        let curr = segments[i];
+
+        // Find the angle from current segment to the one in front
+        let angle = Math.atan2(prev.y - curr.y, prev.x - curr.x);
+        curr.angle = angle;
+
+        // Keep it locked at 'segmentLength' distance behind
+        curr.x = prev.x - Math.cos(angle) * segmentLength;
+        curr.y = prev.y - Math.sin(angle) * segmentLength;
+      }
+
+      // 5. Draw the skeleton
+      ctx.strokeStyle = "lime";
+      ctx.lineWidth = 2;
+
+      for (let i = 0; i < segments.length; i++) {
+        let s = segments[i];
+
+        // Draw spine bone connecting to the next segment
+        if (i < segments.length - 1) {
+          ctx.beginPath();
+          ctx.moveTo(s.x, s.y);
+          ctx.lineTo(segments[i + 1].x, segments[i + 1].y);
+          ctx.stroke();
+        }
+
+        // Draw ribs on the upper body (segments 4 to 14)
+        if (i >= 4 && i <= 14) {
+          let ribSize = 18 - Math.abs(9 - i) * 2; // Wider in the middle
+          drawSideBones(s.x, s.y, s.angle, ribSize);
+        }
+
+        // Draw longer legs at segment 5 (front) and segment 15 (back)
+        if (i === 5 || i === 15) {
+          drawSideBones(s.x, s.y, s.angle, 32);
+        }
+      }
+
+      // Draw a small skull circle at the head
+      ctx.beginPath();
+      ctx.arc(head.x, head.y, 6, 0, Math.PI * 2);
+      ctx.fillStyle = "white";
+      ctx.fill();
+
+      requestAnimationFrame(animate);
+    }
+
+    // Helper function to draw left and right bones sticking out from the spine
+    function drawSideBones(x, y, angle, length) {
+      let leftAngle = angle + Math.PI / 2;
+      let rightAngle = angle - Math.PI / 2;
+
+      ctx.beginPath();
+      ctx.moveTo(x + Math.cos(leftAngle) * length, y + Math.sin(leftAngle) * length);
+      ctx.lineTo(x + Math.cos(rightAngle) * length, y + Math.sin(rightAngle) * length);
+      ctx.stroke();
+    }
+
+    // Start the animation!
+    animate();
+  </script>
+
+</body>
+</html>
