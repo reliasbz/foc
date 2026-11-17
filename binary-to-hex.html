@@ -1,239 +1,81 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FoC - Binary to Hexadecimal</title>
+  <title>Binary to Hexadecimal Converter</title>
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
     body {
-      font-family: Arial, Helvetica, sans-serif;
-      background-color: #f4f6f9;
-      color: #222222;
-      padding: 30px 15px;
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 40px;
     }
-
-    .container {
-      max-width: 600px;
-      margin: 0 auto;
-      background-color: #ffffff;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-      text-align: center;
-    }
-
-    .course-tag {
-      display: inline-block;
-      background-color: #e8eef7;
-      color: #1d4ed8;
-      font-weight: bold;
-      font-size: 14px;
-      padding: 5px 12px;
-      border-radius: 20px;
-      margin-bottom: 10px;
-    }
-
-    h1 {
-      font-size: 26px;
-      margin-bottom: 20px;
-      color: #111827;
-    }
-
-    .input-group {
-      margin: 20px 0;
-    }
-
-    label {
-      display: block;
-      font-size: 16px;
-      margin-bottom: 10px;
-      font-weight: bold;
-    }
-
-    input[type="text"] {
-      width: 220px;
-      padding: 10px 14px;
-      font-size: 18px;
-      text-align: center;
-      border: 2px solid #cbd5e1;
-      border-radius: 6px;
-      letter-spacing: 2px;
-    }
-
-    input[type="text"]:focus {
-      outline: none;
-      border-color: #2563eb;
-    }
-
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-      font-weight: bold;
-      color: #ffffff;
-      background-color: #2563eb;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      margin-left: 8px;
-    }
-
-    button:hover {
-      background-color: #1d4ed8;
-    }
-
-    .result-box {
-      margin-top: 20px;
-      padding: 15px;
-      background-color: #f8fafc;
-      border: 1px solid #e2e8f0;
+    .box {
+      background-color: white;
+      padding: 25px;
+      max-width: 500px;
+      border: 1px solid #ccc;
       border-radius: 8px;
-      font-size: 20px;
-      font-weight: bold;
     }
-
-    .result-value {
-      color: #2563eb;
-      font-size: 24px;
-      margin-left: 6px;
-    }
-
-    .error-text {
-      color: #dc2626;
-      font-size: 15px;
-      margin-top: 10px;
-      min-height: 20px;
-    }
-
-    .reference-section {
-      margin-top: 30px;
-      text-align: center;
-    }
-
-    .reference-section h2 {
+    input {
+      padding: 8px;
       font-size: 16px;
-      color: #4b5563;
-      margin-bottom: 12px;
+      width: 150px;
     }
-
-    table {
-      width: 100%;
-      max-width: 380px;
-      margin: 0 auto;
-      border-collapse: collapse;
-      font-size: 14px;
+    button {
+      padding: 8px 15px;
+      font-size: 16px;
+      background-color: #0056b3;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
     }
-
-    th, td {
-      border: 1px solid #cbd5e1;
-      padding: 6px 10px;
-      text-align: center;
-    }
-
-    th {
-      background-color: #eff6ff;
-      color: #1e3a8a;
-    }
-
-    tr:nth-child(even) {
-      background-color: #f9fafb;
-    }
-
-    .footer {
-      margin-top: 30px;
-      padding-top: 15px;
-      border-top: 1px solid #e5e7eb;
-      font-size: 14px;
-      color: #6b7280;
-    }
-
-    .back-link {
-      display: inline-block;
-      margin-bottom: 10px;
-      color: #2563eb;
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    .back-link:hover {
-      text-decoration: underline;
+    img {
+      max-width: 100%;
+      margin-top: 20px;
+      border: 1px solid #ddd;
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <div class="course-tag">FoC</div>
-    <h1>Project 1: Binary to Hexadecimal</h1>
+  <div class="box">
+    <a href="project.html">Back to My Projects</a>
+    <h2>Binary to Hexadecimal Converter</h2>
+    <p>Enter a 4-digit binary number (0000 to 1111):</p>
 
-    <div class="input-group">
-      <label for="binaryInput">Enter any 4 digit binary number:</label>
-      <input type="text" id="binaryInput" maxlength="4" placeholder="e.g. 1010">
-      <button onclick="convertBinary()">Submit</button>
-      <p class="error-text" id="errorMsg"></p>
-    </div>
+    <input type="text" id="binInput" maxlength="4" placeholder="e.g. 1010">
+    <button onclick="convertToHex()">Convert</button>
 
-    <div class="result-box">
-      Hexadecimal Value : <span class="result-value" id="hexOutput">-</span>
-    </div>
+    <p><strong>Hexadecimal Result:</strong> <span id="result"></span></p>
 
-    <div class="reference-section">
-      <h2>Conversion Reference Chart</h2>
-    
-      <table>
-        <thead>
-          <tr>
-            <th>Decimal</th>
-            <th>Hexadecimal</th>
-            <th>Binary</th>
-          </tr>
-        </thead>
-        <tbody id="chartBody"></tbody>
-      </table>
-    </div>
-
-    <div class="footer">
-     
-      <a href="project.html" class="back-link">Back to Projects</a>
-      <p>@ Powered by UB</p>
-    </div>
+    <img src="bintohex.jpg" alt="Binary to Hex Chart">
   </div>
 
   <script>
-    const chartBody = document.getElementById("chartBody");
-    for (let i = 0; i < 16; i++) {
-      const hex = i.toString(16).toUpperCase();
-      const bin = i.toString(2).padStart(4, "0");
-      const row = `<tr><td>${i}</td><td><strong>${hex}</strong></td><td>${bin}</td></tr>`;
-      chartBody.innerHTML += row;
+    function convertToHex() {
+      var bin = document.getElementById("binInput").value;
+      var hex = "";
+
+      if (bin == "0000") { hex = "0"; }
+      else if (bin == "0001") { hex = "1"; }
+      else if (bin == "0010") { hex = "2"; }
+      else if (bin == "0011") { hex = "3"; }
+      else if (bin == "0100") { hex = "4"; }
+      else if (bin == "0101") { hex = "5"; }
+      else if (bin == "0110") { hex = "6"; }
+      else if (bin == "0111") { hex = "7"; }
+      else if (bin == "1000") { hex = "8"; }
+      else if (bin == "1001") { hex = "9"; }
+      else if (bin == "1010") { hex = "A"; }
+      else if (bin == "1011") { hex = "B"; }
+      else if (bin == "1100") { hex = "C"; }
+      else if (bin == "1101") { hex = "D"; }
+      else if (bin == "1110") { hex = "E"; }
+      else if (bin == "1111") { hex = "F"; }
+      else { hex = "Invalid input! Enter 4 digits (0s and 1s)."; }
+
+      document.getElementById("result").innerHTML = hex;
     }
-
-    function convertBinary() {
-      const input = document.getElementById("binaryInput").value.trim();
-      const errorMsg = document.getElementById("errorMsg");
-      const hexOutput = document.getElementById("hexOutput");
-
-      if (!/^[01]{4}$/.test(input)) {
-        errorMsg.textContent = "Please enter exactly 4 digits using only 0 and 1.";
-        hexOutput.textContent = "-";
-        return;
-      }
-
-      errorMsg.textContent = "";
-      const decimalValue = parseInt(input, 2);
-      hexOutput.textContent = decimalValue.toString(16).toUpperCase();
-    }
-
-    document.getElementById("binaryInput").addEventListener("keypress", function (e) {
-      if (e.key === "Enter") {
-        convertBinary();
-      }
-    });
   </script>
 
 </body>
